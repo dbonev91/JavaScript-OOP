@@ -2,38 +2,54 @@ var specialConsole = (function specialConsole() {
 
     function writeLine() {
         if(arguments.length > 2) {
-            writeLineWithArguments(arguments);
+            console.log(writeLineWithArguments(arguments));
         }
         else {
-            writeLineWithoutArguments(arguments);
+            console.log(writeLineWithoutArguments(arguments));
+        }
+    }
+
+    function writeError() {
+        if(arguments.length > 2) {
+            console.error(writeLineWithArguments(arguments));
+        }
+        else {
+            console.error(writeLineWithoutArguments(arguments));
+        }
+    }
+
+    function writeWarning() {
+        if(arguments.length > 2) {
+            console.warn(writeLineWithArguments(arguments));
+        }
+        else {
+            console.warn(writeLineWithoutArguments(arguments));
         }
     }
 
     function writeLineWithoutArguments(args) {
-        console.log(args[0]);
+        var strResult = args[0].toString();
+        return strResult;
     }
 
     function writeLineWithArguments(args) {
         var pattern = args[0];
         var isThereAPlaceHolder = pattern.match(/{{1}[0-9]}{1}/g);
-
         var arrReplacement = [];
-
         arrReplacement[0] = pattern.replace(isThereAPlaceHolder[0], args[1]);
-
         if (isThereAPlaceHolder.length > 1) {
             for (var i = 1; i < isThereAPlaceHolder.length; i++) {
                 arrReplacement[i] = arrReplacement[i - 1].replace(isThereAPlaceHolder[i], args[i + 1]);
             }
         }
-
-        console.log(arrReplacement[arrReplacement.length - 1]);
+        var strResult = arrReplacement[arrReplacement.length - 1].toString();
+        return strResult;
     }
 
     return {
         writeLine: writeLine,
-        writeError: writeLine,
-        writeWarning: writeLine
+        writeError: writeError,
+        writeWarning: writeWarning
     };
 
 })();
