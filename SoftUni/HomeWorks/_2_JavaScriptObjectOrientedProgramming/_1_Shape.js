@@ -11,12 +11,22 @@ var Shapes = (function() {
                 var serializedShape = {
                     x: this._x,
                     y: this._y,
-                    color: this._color,
-                    canvas: document.getElementById("shapesContainer").getContext("2d")
+                    color: this._color
                 };
 
                 return serializedShape;
+            },
+            canvas: function () {
+                var canvas = {
+                    element: document.getElementById("shapesContainer").getContext("2d")
+                };
+
+                return canvas;
             }
+        };
+
+        Shape.prototype.toString = function () {
+            return this.serialize();
         };
 
         return Shape;
@@ -39,10 +49,14 @@ var Shapes = (function() {
         };
 
         Rectangle.prototype.draw = function () {
-            this.serialize().canvas.beginPath();
-            this.serialize().canvas.fillStyle = this.serialize().color;
-            this.serialize().canvas.fillRect(this.serialize().x,
+            this.canvas().element.beginPath();
+            this.canvas().element.fillStyle = this.serialize().color;
+            this.canvas().element.fillRect(this.serialize().x,
                 this.serialize().y, this.serialize().width, this.serialize().height);
+        };
+
+        Rectangle.prototype.toString = function () {
+            return this.serialize();
         };
 
         return Rectangle;
@@ -69,12 +83,16 @@ var Shapes = (function() {
         };
 
         Triangle.prototype.draw = function () {
-            this.serialize().canvas.beginPath();
-            this.serialize().canvas.fillStyle = this.serialize().color;
-            this.serialize().canvas.moveTo(this.serialize().x, this.serialize().y);
-            this.serialize().canvas.lineTo(this.serialize().x2 + this.serialize().x, this.serialize().y2 + this.serialize().y);
-            this.serialize().canvas.lineTo(this.serialize().x3 + this.serialize().x, this.serialize().y3 + this.serialize().y);
-            this.serialize().canvas.fill();
+            this.canvas().element.beginPath();
+            this.canvas().element.fillStyle = this.serialize().color;
+            this.canvas().element.moveTo(this.serialize().x, this.serialize().y);
+            this.canvas().element.lineTo(this.serialize().x2 + this.serialize().x, this.serialize().y2 + this.serialize().y);
+            this.canvas().element.lineTo(this.serialize().x3 + this.serialize().x, this.serialize().y3 + this.serialize().y);
+            this.canvas().element.fill();
+        };
+
+        Triangle.prototype.toString = function () {
+            return this.serialize();
         };
 
         return Triangle;
@@ -97,11 +115,15 @@ var Shapes = (function() {
         };
 
         Segment.prototype.draw = function () {
-            this.serialize().canvas.beginPath();
-            this.serialize().canvas.moveTo(this.serialize().x, this.serialize().y);
-            this.serialize().canvas.lineTo(this.serialize().x2 + this.serialize().x, this.serialize().y2 + this.serialize().y);
-            this.serialize().canvas.strokeStyle = this.serialize().color;
-            this.serialize().canvas.stroke();
+            this.canvas().element.beginPath();
+            this.canvas().element.moveTo(this.serialize().x, this.serialize().y);
+            this.canvas().element.lineTo(this.serialize().x2 + this.serialize().x, this.serialize().y2 + this.serialize().y);
+            this.canvas().element.strokeStyle = this.serialize().color;
+            this.canvas().element.stroke();
+        };
+
+        Segment.prototype.toString = function () {
+            return this.serialize();
         };
 
         return Segment;
@@ -120,9 +142,13 @@ var Shapes = (function() {
         };
 
         Point.prototype.draw = function () {
-            this.serialize().canvas.beginPath();
-            this.serialize().canvas.fillStyle = this.serialize().color;
-            this.serialize().canvas.fillRect(this.serialize().x, this.serialize().y, 3, 3);
+            this.canvas().element.beginPath();
+            this.canvas().element.fillStyle = this.serialize().color;
+            this.canvas().element.fillRect(this.serialize().x, this.serialize().y, 3, 3);
+        };
+
+        Point.prototype.toString = function () {
+            return this.serialize();
         };
 
         return Point;
@@ -136,3 +162,15 @@ var Shapes = (function() {
         Point: Point
     };
 }());
+
+var point = new Shapes.Point(1, 2, "#000000");
+console.log(point.toString());
+
+var triangle = new Shapes.Triangle(1, 2, "#ff0000", 34, 57, 88, 90);
+console.log(triangle.toString());
+
+var rectangle = new Shapes.Rectangle(1, 2, "#123456", 200, 300);
+console.log(rectangle.toString());
+
+var segment = new Shapes.Segment(1, 2, "#654321", 22, 45);
+console.log(segment.toString());
