@@ -56,7 +56,7 @@ var Shapes = (function() {
         };
 
         Rectangle.prototype.toString = function () {
-            return this.serialize();
+            return "Rectangle: " + JSON.stringify(this.serialize());
         };
 
         return Rectangle;
@@ -92,7 +92,7 @@ var Shapes = (function() {
         };
 
         Triangle.prototype.toString = function () {
-            return this.serialize();
+            return "Triangle: " + JSON.stringify(this.serialize());
         };
 
         return Triangle;
@@ -123,7 +123,7 @@ var Shapes = (function() {
         };
 
         Segment.prototype.toString = function () {
-            return this.serialize();
+            return "Segment: " + JSON.stringify(this.serialize());
         };
 
         return Segment;
@@ -148,7 +148,7 @@ var Shapes = (function() {
         };
 
         Point.prototype.toString = function () {
-            return this.serialize();
+            return "Point: " + JSON.stringify(this.serialize());
         };
 
         return Point;
@@ -163,14 +163,14 @@ var Shapes = (function() {
     };
 }());
 
-var point = new Shapes.Point(1, 2, "#000000");
+var point = new Shapes.Point(1, 2, "red");
 console.log(point.toString());
 
-var triangle = new Shapes.Triangle(1, 2, "#ff0000", 34, 57, 88, 90);
+var triangle = new Shapes.Triangle(1, 2, "red", 34, 57, 88, 90);
 console.log(triangle.toString());
 
-var rectangle = new Shapes.Rectangle(1, 2, "#123456", 200, 300);
+var rectangle = new Shapes.Rectangle(1, 2, "red", 200, 300);
 console.log(rectangle.toString());
 
-var segment = new Shapes.Segment(1, 2, "#654321", 22, 45);
+var segment = new Shapes.Segment(1, 2, "red", 22, 45);
 console.log(segment.toString());
